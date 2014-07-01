@@ -79,4 +79,16 @@ public class Pair {
         h = (char) ((w >> 8) & 0xFF);
     }
 
+
+    /**
+     * simulates W++
+     * @return W before increment
+     */
+    public char incW()
+    {
+        char c=getW();
+        setW((char) (c+1));
+        return c;
+    }
+
 }

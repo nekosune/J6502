@@ -10,35 +10,84 @@ public abstract class M6502 {
     /**
      * 1: Carry Occured
      */
-    public static int C_FLAG = 0x01;
+    public static byte C_FLAG = 0x01;
     /**
      * 1: Result is zero
      */
-    public static int Z_FLAG = 0x02;
+    public static byte Z_FLAG = 0x02;
     /**
      * 1: Interupts disabled
      */
-    public static int I_FLAG = 0x04;
+    public static byte I_FLAG = 0x04;
     /**
      * 1: Decimal mode
      */
-    public static int D_FLAG = 0x08;
+    public static byte D_FLAG = 0x08;
     /**
      * Break [0 on stk after int]
      */
-    public static int B_FLAG = 0x10;
+    public static byte B_FLAG = 0x10;
     /**
      * Always 1
      */
-    public static int R_FLAG = 0x20;
+    public static byte R_FLAG = 0x20;
     /**
      * 1: Overflow occured
      */
-    public static int V_FLAG = 0x40;
+    public static byte V_FLAG = 0x40;
     /**
      * 1: Result is negative
      */
     public static int N_FLAG = 0x80;
+
+
+    public static byte Cycles[] =new byte[]
+    {
+                7,6,2,8,3,3,5,5,3,2,2,2,4,4,6,6,
+                2,5,2,8,4,4,6,6,2,4,2,7,5,5,7,7,
+                6,6,2,8,3,3,5,5,4,2,2,2,4,4,6,6,
+                2,5,2,8,4,4,6,6,2,4,2,7,5,5,7,7,
+                6,6,2,8,3,3,5,5,3,2,2,2,3,4,6,6,
+                2,5,2,8,4,4,6,6,2,4,2,7,5,5,7,7,
+                6,6,2,8,3,3,5,5,4,2,2,2,5,4,6,6,
+                2,5,2,8,4,4,6,6,2,4,2,7,5,5,7,7,
+                2,6,2,6,3,3,3,3,2,2,2,2,4,4,4,4,
+                2,6,2,6,4,4,4,4,2,5,2,5,5,5,5,5,
+                2,6,2,6,3,3,3,3,2,2,2,2,4,4,4,4,
+                2,5,2,5,4,4,4,4,2,4,2,5,4,4,4,4,
+                2,6,2,8,3,3,5,5,2,2,2,2,4,4,6,6,
+                2,5,2,8,4,4,6,6,2,4,2,7,5,5,7,7,
+                2,6,2,8,3,3,5,5,2,2,2,2,4,4,6,6,
+                2,5,2,8,4,4,6,6,2,4,2,7,5,5,7,7
+    };
+
+    static int ZNTable[] = new int[]
+    {
+                Z_FLAG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+                N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,N_FLAG,
+    };
 
     byte A, P, X, Y, S;     /** CPU registers and program counter   */
     Pair PC; /** Program counter */
@@ -147,5 +196,18 @@ public abstract class M6502 {
      * @return <c>1</c> if handled or <c>0</c>if was invalid
      */
     public abstract byte Patch6502(byte Op);
+
+
+    void MC_Ab(Pair loc)
+    {
+        M_LDWORD(loc);
+    }
+
+
+    void M_LDWORD(Pair loc)
+    {
+        loc.setL((char) Op6502(PC.incW()));
+        loc.setH((char)(Op6502(PC.incW())));
+    }
 
 }
