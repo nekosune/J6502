@@ -203,7 +203,95 @@ public abstract class M6502 {
         M_LDWORD(loc);
     }
 
+    void MC_Zp(Pair loc)
+    {
+        loc.setW((char) Op6502(PC.incW()));
+    }
 
+    void MC_Zx(Pair loc)
+    {
+        loc.setW((char) ((char)(Op6502(PC.incW()))+this.X));
+    }
+
+    void MC_Zy(Pair loc)
+    {
+        loc.setW((char) ((char)(Op6502(PC.incW()))+this.Y));
+    }
+
+    void MC_Ax(Pair loc)
+    {
+        M_LDWORD(loc);
+        loc.setW((char) (loc.getW()+this.X));
+    }
+
+    void MC_Ay(Pair loc)
+    {
+        M_LDWORD(loc);
+        loc.setW((char) (loc.getW()+this.Y));
+    }
+
+
+    void MC_Ix(Pair loc, Pair K)
+    {
+        K.setW((char) ((byte)Op6502(PC.incW())+this.X));
+        loc.setL((char) Op6502(K.incW()));loc.setH((char) Op6502(K.getW()));
+    }
+
+    void MC_Iy(Pair loc, Pair K)
+    {
+        K.setW((char) ((byte)Op6502(PC.incW())));
+        loc.setL((char) Op6502(K.incW()));loc.setH((char) Op6502(K.getW()));
+        loc.setW((char) (loc.getW()+this.Y));
+    }
+
+
+    byte MR_Ab(Pair J)
+    {
+        MC_Ab(J);
+        return Rd6502(J.getW());
+    }
+
+    byte MR_Im()
+    {
+        return Op6502(PC.incW());
+    }
+
+    byte MR_Zp(Pair J)
+    {
+        MC_Zp(J);
+        return Rd6502(J.getW());
+    }
+
+    byte MR_Zx(Pair J)
+    {
+        MC_Zx(J);
+        return Rd6502(J.getW());
+    }
+    byte MR_Zy(Pair J)
+    {
+        MC_Zy(J);
+        return Rd6502(J.getW());
+    }
+    byte MR_Ax(Pair J)
+    {
+        MC_Ax(J);
+        return Rd6502(J.getW());
+    }
+    byte MR_Ay(Pair J)
+    {
+        MC_Ay(J);
+        return Rd6502(J.getW());
+    }
+    byte MR_IX(Pair J,Pair K)
+    {
+        MC_Ix(J,K);
+        return Rd6502(J.getW());
+    }
+    byte MR_Iy(Pair J,Pair K)
+    {
+        MC_Iy(J,K);
+        return Rd6502(J.getW());
+    }
     void M_LDWORD(Pair loc)
     {
         loc.setL((char) Op6502(PC.incW()));
