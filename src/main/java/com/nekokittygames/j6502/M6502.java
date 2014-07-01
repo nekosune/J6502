@@ -3,7 +3,7 @@ package com.nekokittygames.j6502;
 /**
  * Created by nekosune on 01/07/14.
  */
-abstract class M6502 {
+public abstract class M6502 {
     public static int INT_NONE = 0;      /* No interrupt required        */
     public static int INT_IRQ = 1;        /* Standard IRQ interrupt       */
     public static int INT_NMI = 2;        /* Non-maskable interrupt       */
@@ -31,5 +31,16 @@ abstract class M6502 {
     byte TrapBadOps;    /* Set to 1 to warn of illegal opcodes */
     char Trap;          /* Set Trap to address to trace from   */
     byte Trace;         /* Set Trace=1 to start tracing        */
+
+
+    public void Reset6502()
+    {
+
+    }
+
+    public int Exec6502(int RunCycles)
+    {
+       return -1;
+    }
 
 }
