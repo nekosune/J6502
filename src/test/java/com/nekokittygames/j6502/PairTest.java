@@ -52,7 +52,7 @@ public class PairTest extends TestCase {
         Pair pair = new Pair((char) 1, (char) 2);
         pair.setW((char) 0x303);
         char c=pair.incW();
-        Assert.assertEquals("incW returns original W",0x304,c);
+        Assert.assertEquals("incW returns original W",0x303,c);
         Assert.assertEquals("W is incremented after incW",0x304,c);
     }
 }
