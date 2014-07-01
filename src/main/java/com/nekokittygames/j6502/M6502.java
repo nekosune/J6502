@@ -3,7 +3,7 @@ package com.nekokittygames.j6502;
 /**
  * Created by nekosune on 01/07/14.
  */
-public abstract class M6502 {
+abstract class M6502 {
     public static int INT_NONE = 0;      /* No interrupt required        */
     public static int INT_IRQ = 1;        /* Standard IRQ interrupt       */
     public static int INT_NMI = 2;        /* Non-maskable interrupt       */

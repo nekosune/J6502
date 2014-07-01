@@ -3,9 +3,9 @@ package com.nekokittygames.j6502;
 /**
  * Created by nekosune on 01/07/14.
  */
-public class Pair {
-    public char h;
-    public char l;
+class Pair {
+    private char h;
+    private char l;
 
     public Pair(char h, char l) {
         this.h = h;
@@ -34,7 +34,7 @@ public class Pair {
 
 
     public char getW() {
-        char W = 0;
+        char W;
         W = (char) (h << 8);
         W ^= l;
         return W;
